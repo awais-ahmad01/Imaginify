@@ -51,29 +51,29 @@ export async function POST(req: NextRequest) {
     }
 
     // UPDATE
-    if (eventType === "user.updated") {
-      const { id, image_url, first_name, last_name, username } = evt.data as any
+    // if (eventType === "user.updated") {
+    //   const { id, image_url, first_name, last_name, username } = evt.data as any
 
-      const user = {
-        firstName: first_name,
-        lastName: last_name,
-        username: username!,
-        photo: image_url,
-      }
+    //   const user = {
+    //     firstName: first_name,
+    //     lastName: last_name,
+    //     username: username!,
+    //     photo: image_url,
+    //   }
 
-      const updatedUser = await updateUser(id, user)
+    //   const updatedUser = await updateUser(id, user)
 
-      return NextResponse.json({ message: "OK", user: updatedUser })
-    }
+    //   return NextResponse.json({ message: "OK", user: updatedUser })
+    // }
 
-    // DELETE
-    if (eventType === "user.deleted") {
-      const { id } = evt.data as any
+    // // DELETE
+    // if (eventType === "user.deleted") {
+    //   const { id } = evt.data as any
 
-      const deletedUser = await deleteUser(id!)
+    //   const deletedUser = await deleteUser(id!)
 
-      return NextResponse.json({ message: "OK", user: deletedUser })
-    }
+    //   return NextResponse.json({ message: "OK", user: deletedUser })
+    // }
 
     // fallback for unhandled events
     console.log(`⚠️ Unhandled Clerk event type: ${eventType}`)

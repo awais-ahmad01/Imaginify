@@ -100,7 +100,7 @@ import { createUser, updateUser, deleteUser } from '@/lib/database/actions/user.
 
 // create a Clerk client instance
 const clerkClient = createClerkClient({ 
-  secretKey: process.env.CLERK_WEBHOOK_SIGNING_SECRET! 
+  secretKey: process.env.CLERK_SECRET_KEY!, 
 })
 
 export async function POST(req: NextRequest) {

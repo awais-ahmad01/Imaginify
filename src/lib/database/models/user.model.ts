@@ -14,7 +14,7 @@ import {Schema, model, models, Document} from 'mongoose';
 // }
 
 const UserSchema = new Schema({
-    username: {type: String, required: true},
+    username: {type: String},
     email: {type: String, required: true, unique: true},
     clerkId: {type: String, required: true, unique: true},
     firstName: {type: String},

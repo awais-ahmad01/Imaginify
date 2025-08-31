@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
 
     // CREATE
     if (eventType === "user.created") {
+        console.log('Handling user.created event')
       const { id, email_addresses, image_url, first_name, last_name, username } = evt.data as any
 
       const user = {
@@ -30,7 +31,11 @@ export async function POST(req: NextRequest) {
         photo: image_url,
       }
 
+      console.log('Creating user with data:', user)
+
       const newUser = await createUser(user)
+
+      console.log('New user created in database:', newUser)
 
       // set Clerk public metadata
       if (newUser) {

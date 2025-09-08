@@ -1,6 +1,6 @@
 import Sidebar from '@/components/shared/sidebar';
 import MobileNav from '@/components/shared/MobileNav';
-import React from 'react'
+import { Toaster } from '@/components/ui/sonner';
 
 const Layout = ({children}: {children: React.ReactNode}) => {
   return (
@@ -13,6 +13,8 @@ const Layout = ({children}: {children: React.ReactNode}) => {
                 {children} 
             </div>
         </div>
+
+        <Toaster position='top-right' richColors closeButton />
            
     </main>
   )

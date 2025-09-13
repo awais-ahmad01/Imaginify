@@ -9,12 +9,7 @@ import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+
 } from "@/components/ui/form";
 
 import {
@@ -154,6 +149,8 @@ const TransformationForm = ({
             path: `/transformations/${data._id}`
           })
 
+          console.log("updated Image", updatedImage)
+
           if(updatedImage) {
             router.push(`/transformations/${updatedImage._id}`)
           }
@@ -191,19 +188,20 @@ const TransformationForm = ({
         setNewTransformations((prev: any) => ({
             ...prev,
             [type]: {
-                ...prev[type],
+                ...prev?.[type],
                 [fieldName === "prompt" ? "prompt": "to"]: value,
             },
         }));
 
         
-    }, 1000);
+    }, 1000)();
 
     return onChangeField(value);
   }
 
 
   const onTransformHandler = () =>{
+
     setIsTransforming(true);
 
     console.log("Transformation Handler")

@@ -1,9 +1,48 @@
-import React from 'react'
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-const UpdateTransformationPage = () => {
+import Header from "@/components/shared/Header";
+import TransformationForm from "@/components/shared/TransformationForm";
+import { transformationTypes } from "@/constants";
+import { getUserById } from "@/lib/database/actions/user.action";
+import { getImageById } from "@/lib/database/actions/image.actions";
+
+
+type PageProps = {
+  params: Promise<{ id: string }>; // 👈 mark as Promise
+};
+
+const Page = async ({ params }: PageProps) => {
+
+  const { id } = await params;
+
+  const { userId } = await auth();
+
+  if (!userId) redirect("/sign-in");
+
+  const user = await getUserById(userId);
+  const image = await getImageById(id);
+
+  const transformation =
+    transformationTypes[image.transformationType as TransformationTypeKey];
+
   return (
-    <div>UpdateTransformationPage</div>
-  )
-}
+    <>
+      <Header title={transformation.title} subtitle={transformation.subTitle} />
 
-export default UpdateTransformationPage
+      <section className="mt-10">
+        <TransformationForm
+          action="Update"
+          userId={user._id}
+          type={image.transformationType as TransformationTypeKey}
+          creditBalance={user.creditBalance}
+          config={image.config}
+          data={image}
+        />
+      </section>
+    </>
+  );
+};
+
+
+export default Page;

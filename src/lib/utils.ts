@@ -1,6 +1,6 @@
 
 import { type ClassValue, clsx } from "clsx";
-// import qs from "qs";
+import qs from "qs";
 import { twMerge } from "tailwind-merge";
 
 import { aspectRatioOptions } from "@/constants";
@@ -52,36 +52,36 @@ export const dataUrl = `data:image/svg+xml;base64,${toBase64(
 // ==== End
 
 // FORM URL QUERY
-// export const formUrlQuery = ({
-//   searchParams,
-//   key,
-//   value,
-// }: FormUrlQueryParams) => {
-//   const params = { ...qs.parse(searchParams.toString()), [key]: value };
+export const formUrlQuery = ({
+  searchParams,
+  key,
+  value,
+}: FormUrlQueryParams) => {
+  const params = { ...qs.parse(searchParams.toString()), [key]: value };
 
-//   return `${window.location.pathname}?${qs.stringify(params, {
-//     skipNulls: true,
-//   })}`;
-// };
+  return `${window.location.pathname}?${qs.stringify(params, {
+    skipNulls: true,
+  })}`;
+};
 
 // REMOVE KEY FROM QUERY
-// export function removeKeysFromQuery({
-//   searchParams,
-//   keysToRemove,
-// }: RemoveUrlQueryParams) {
-//   const currentUrl = qs.parse(searchParams);
+export function removeKeysFromQuery({
+  searchParams,
+  keysToRemove,
+}: RemoveUrlQueryParams) {
+  const currentUrl = qs.parse(searchParams);
 
-//   keysToRemove.forEach((key) => {
-//     delete currentUrl[key];
-//   });
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
 
   // Remove null or undefined values
-//   Object.keys(currentUrl).forEach(
-//     (key) => currentUrl[key] == null && delete currentUrl[key]
-//   );
+  Object.keys(currentUrl).forEach(
+    (key) => currentUrl[key] == null && delete currentUrl[key]
+  );
 
-//   return `${window.location.pathname}?${qs.stringify(currentUrl)}`;
-// }
+  return `${window.location.pathname}?${qs.stringify(currentUrl)}`;
+}
 
 // DEBOUNCE
 export const debounce = (func: (...args: any[]) => void, delay: number) => {
@@ -115,14 +115,18 @@ export const download = (url: string, filename: string) => {
     throw new Error("Resource URL not provided! You need to provide one");
   }
 
+  console.log('downloading...')
+
   fetch(url)
     .then((response) => response.blob())
     .then((blob) => {
+      console.log("Blob:", blob)
       const blobURL = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = blobURL;
 
       if (filename && filename.length)
+        console.log('dwnlaod')
         a.download = `${filename.replace(" ", "_")}.png`;
       document.body.appendChild(a);
       a.click();
